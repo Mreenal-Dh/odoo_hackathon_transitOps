@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-gray-800 bg-gray-50/50 selection:bg-slate-900 selection:text-white font-sans;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full hover:bg-gray-300 transition-all;
+}
+
+/* Dark Mode support in Tailwind v4 */
+.dark {
+  color-scheme: dark;
+}
+
+/* Base Body Override */
+html.dark,
+html.dark body,
+html.dark #app-root {
+  background-color: #0b0f19 !important; /* Rich deep slate background */
+  color: #f1f5f9 !important;
+}
+
+/* Left Sidebar in Dark Mode */
+html.dark aside#app-sidebar {
+  background-color: #0f172a !important; /* slate-900 */
+  border-color: #1e293b !important; /* slate-800 */
+}
+
+/* Brand logo and profile boxes */
+html.dark aside#app-sidebar div {
+  border-color: #1e293b !important;
+}
+html.dark aside#app-sidebar nav button {
+  color: #94a3b8 !important;
+}
+html.dark aside#app-sidebar nav button:hover {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+html.dark aside#app-sidebar nav button[id^="nav-item-"][class*="bg-slate-900"] {
+  background-color: #2563eb !important; /* Blue accent for active tab in dark mode */
+  color: #ffffff !important;
+}
+
+/* Headers & Main Panels */
+html.dark header#main-header {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+html.dark header#main-header h2 {
+  color: #e2e8f0 !important;
+}
+
+html.dark main#main-panel {
+  background-color: #0b0f19 !important;
+}
+
+/* Cards & Viewport containers */
+html.dark #main-viewport .bg-white,
+html.dark #main-viewport [class*="bg-white"] {
+  background-color: #111827 !important; /* deep card grey/black */
+  border-color: #1f2937 !important; /* border grey */
+  color: #f3f4f6 !important;
+}
+
+/* Card titles and body text */
+html.dark #main-viewport h3,
+html.dark #main-viewport h4,
+html.dark #main-viewport .text-gray-900,
+html.dark #main-viewport .text-gray-950 {
+  color: #f9fafb !important;
+}
+
+html.dark #main-viewport p,
+html.dark #main-viewport span:not([class*="bg-"]),
+html.dark #main-viewport .text-gray-500,
+html.dark #main-viewport .text-gray-400,
+html.dark #main-viewport .text-gray-450 {
+  color: #9ca3af !important;
+}
+
+/* Forms & Dialog Modals */
+html.dark div[role="dialog"],
+html.dark div.bg-white.rounded-xl.shadow-xl,
+html.dark .fixed .bg-white {
+  background-color: #111827 !important;
+  border: 1px solid #1f2937 !important;
+  color: #f3f4f6 !important;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+html.dark input:focus,
+html.dark select:focus {
+  border-color: #3b82f6 !important;
+  outline: none;
+}
+
+/* Tables and list rows */
+html.dark table {
+  color: #f3f4f6 !important;
+}
+html.dark thead,
+html.dark th {
+  background-color: #1f2937 !important;
+  color: #9ca3af !important;
+  border-color: #374151 !important;
+}
+html.dark tr,
+html.dark td {
+  border-color: #1f2937 !important;
+}
+html.dark tr:hover {
+  background-color: #1f2937 !important;
+}
+
+/* Override chart styling */
+html.dark .recharts-cartesian-grid-horizontal line,
+html.dark .recharts-cartesian-grid-vertical line {
+  stroke: #1f2937 !important;
+}
+html.dark .recharts-text {
+  fill: #9ca3af !important;
+}
+html.dark .recharts-default-tooltip {
+  background-color: #111827 !important;
+  border-color: #1f2937 !important;
+  color: #f3f4f6 !important;
+}
+
+/* Specific component buttons / tabs overrides */
+html.dark button.bg-gray-50,
+html.dark button[class*="bg-gray-"] {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+  border-color: #374151 !important;
+}
+
+html.dark button.bg-gray-50:hover,
+html.dark button[class*="bg-gray-"]:hover {
+  background-color: #374151 !important;
+}
+
+/* Badges */
+html.dark .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: #60a5fa !important;
+  border-color: rgba(59, 130, 246, 0.2) !important;
+}
+html.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.2) !important;
+}
+html.dark .bg-amber-50 {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+  color: #fbbf24 !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+html.dark .bg-indigo-50 {
+  background-color: rgba(99, 102, 241, 0.1) !important;
+  color: #818cf8 !important;
+  border-color: rgba(99, 102, 241, 0.2) !important;
+}
+html.dark .bg-slate-50 {
+  background-color: rgba(100, 116, 139, 0.1) !important;
+  color: #94a3b8 !important;
+  border-color: rgba(100, 116, 139, 0.2) !important;
+}
+html.dark .bg-teal-50 {
+  background-color: rgba(20, 184, 166, 0.1) !important;
+  color: #2dd4bf !important;
+  border-color: rgba(20, 184, 166, 0.2) !important;
+}
+html.dark .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+
