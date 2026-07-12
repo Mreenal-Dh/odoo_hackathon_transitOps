@@ -1,14 +1,14 @@
 Tech Stack
 
-Layer           Technology                          Status
---------------- ----------------------------------- ----------
-Frontend        React 18 + Vite + TypeScript        OK
-Styling         TailwindCSS + shadcn/ui             OK
-Icons           lucide-react                        OK
-Charts          Recharts                            OK
-Server State    TanStack Query (React Query)        OK
-Backend         Node.js + Express + TypeScript       OK
-ORM             Prisma                              OK
-Database        SQLite (Postgres not available)     Fallback
-Auth            JWT + bcrypt (self-contained)        OK
-Runtime         Node.js v24.14.0                    OK
+Layer           Technology                          
+--------------- ----------------------------------- 
+Frontend        React 18 + Vite + TypeScript       
+Styling         TailwindCSS + shadcn/ui            
+Icons           lucide-react                       
+Charts          Recharts                           
+Server State    TanStack Query (React Query)       
+Backend         Node.js + Express + TypeScript      
+ORM             Prisma                             
+Database        Postgres                           
+Auth            JWT + bcrypt (self-contained)       
+Runtime         Node.js v24.14.0                   
