@@ -1,0 +1,128 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Role {
+  role_id   Int    @id @default(autoincrement())
+  role_name String // e.g. "Fleet Manager", "Driver", "Safety Officer", "Financial Analyst"
+  users     User[]
+}
+
+model User {
+  user_id       Int      @id @default(autoincrement())
+  role_id       Int
+  role          Role     @relation(fields: [role_id], references: [role_id])
+  name          String
+  email         String   @unique
+  phone         String
+  password_hash String
+  status        String   @default("Active") // e.g., "Active", "Inactive"
+  created_at    DateTime @default(now())
+}
+
+model Vehicle {
+  vehicle_id               Int              @id @default(autoincrement())
+  registration_number      String           @unique
+  vehicle_name             String
+  vehicle_model            String
+  vehicle_type             String           // e.g., "Truck", "Van", "Trailer"
+  manufacturer             String
+  manufacture_year         Int
+  maximum_load_capacity_kg Float
+  fuel_type                String           // e.g., "Diesel", "Petrol", "Electric"
+  current_odometer         Float
+  acquisition_cost         Float
+  purchase_date            String           // YYYY-MM-DD
+  status                   String           @default("Available") // "Available", "On Trip", "In Shop", "Retired"
+  region                   String           // e.g., "West", "East", "North", "South"
+  
+  drivers                  Driver[]
+  trips                    Trip[]
+  maintenance_logs         MaintenanceLog[]
+  fuel_logs                FuelLog[]
+  expenses                 Expense[]
+}
+
+model Driver {
+  driver_id           Int      @id @default(autoincrement())
+  name                String
+  license_number      String   @unique
+  license_category    String   // e.g., "Class A", "Class B"
+  license_expiry_date String   // YYYY-MM-DD
+  phone               String
+  email               String
+  joining_date        String   // YYYY-MM-DD
+  experience_years    Int
+  safety_score        Float    @default(100.0)
+  status              String   @default("Available") // "Available", "On Trip", "Off Duty", "Suspended"
+  assigned_vehicle_id Int?
+  assigned_vehicle    Vehicle? @relation(fields: [assigned_vehicle_id], references: [vehicle_id])
+  
+  trips               Trip[]
+}
+
+model Trip {
+  trip_id          Int        @id @default(autoincrement())
+  vehicle_id       Int
+  vehicle          Vehicle    @relation(fields: [vehicle_id], references: [vehicle_id])
+  driver_id        Int
+  driver           Driver     @relation(fields: [driver_id], references: [driver_id])
+  source_city      String
+  destination_city String
+  start_date       String     // YYYY-MM-DD
+  end_date         String?    // YYYY-MM-DD
+  cargo_weight     Float
+  planned_distance Float
+  actual_distance  Float?
+  fuel_consumed    Float?
+  revenue          Float
+  status           String     @default("Draft") // "Draft", "Dispatched", "Completed", "Cancelled"
+  
+  fuel_logs        FuelLog[]
+  expenses         Expense[]
+}
+
+model MaintenanceLog {
+  maintenance_id  Int      @id @default(autoincrement())
+  vehicle_id      Int
+  vehicle         Vehicle  @relation(fields: [vehicle_id], references: [vehicle_id])
+  maintenance_type String   // e.g., "Oil Change", "Brake Repair", "Tire Rotation"
+  description     String
+  start_date      String   // YYYY-MM-DD
+  completion_date String?  // YYYY-MM-DD
+  cost            Float
+  status          String   @default("Pending") // "Pending", "In Progress", "Completed"
+  service_center  String
+}
+
+model FuelLog {
+  fuel_log_id     Int      @id @default(autoincrement())
+  vehicle_id      Int
+  vehicle         Vehicle  @relation(fields: [vehicle_id], references: [vehicle_id])
+  trip_id         Int?
+  trip            Trip?    @relation(fields: [trip_id], references: [trip_id])
+  date            String   // YYYY-MM-DD
+  fuel_station    String
+  fuel_type       String
+  liters          Float
+  price_per_liter Float
+  total_cost      Float
+  odometer        Float
+}
+
+model Expense {
+  expense_id   Int      @id @default(autoincrement())
+  trip_id      Int?
+  trip         Trip?    @relation(fields: [trip_id], references: [trip_id])
+  vehicle_id   Int
+  vehicle      Vehicle  @relation(fields: [vehicle_id], references: [vehicle_id])
+  expense_type String   // e.g., "Tolls", "Maintenance", "Driver Allowance", "Miscellaneous"
+  amount       Float
+  expense_date String   // YYYY-MM-DD
+  description  String
+}
